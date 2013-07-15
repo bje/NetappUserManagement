@@ -8,7 +8,7 @@ setup(
     version='0.3',
     packages=['UserManagement'],
     scripts=['bin/adduser_filer'],
-    data_files=[('/opt/system/netapp_user_management', ['bin/config.py'])],
+    data_files=[('/opt/system/netapp_user_management', ['bin/config_template.py'])],
     url='',
     license='',
     author='kmadac',

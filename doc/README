@@ -1,0 +1,17 @@
+What needs to be set on the filer to start using the script:
+
+1. root password has to be one defined in config file in root_passwords list.
+2. enable API access on each filer from server where you sript will run from:
+
+   options httpd.admin.access host=server_ip
+     or
+   options httpd.admin.access if=admin_interface
+
+
+* Option internal needs to be included in security.admin.authentication options to succefully authenticate over ssh
+
+It means set option to:
+
+  options security.admin.authentication internal,nsswitch
+    or
+  options security.admin.authentication internal

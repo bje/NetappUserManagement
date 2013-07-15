@@ -1,0 +1,127 @@
+#!/usr/bin/env python
+
+__author__ = 'kmadac'
+
+import argparse
+import sys
+from UserManagement import FilerUsers, Keys
+from UserManagement import BaseFilerApi
+
+
+def get_filers_from_hosts(filters, path="/etc/hosts"):
+    """
+    Return list of filers from hosts.
+    Filter is list for strings. If there is one of strings in line, the line is considered as filer line,
+     and IP address appended to returned list.
+    """
+    netapps = []
+    hosts_file = None
+    try:
+        hosts_file = open(path,'rU')
+    except IOError:
+        return None
+
+    if hosts_file:
+        for line in hosts_file:
+            for filter in filters:
+                if filter in line:
+                    netapps.append(line.split()[1])
+
+    return netapps
+
+
+def main():
+    parser = argparse.ArgumentParser("User management for Netapp environment.")
+
+    filergroup = parser.add_mutually_exclusive_group()
+    usergroup = parser.add_mutually_exclusive_group()
+
+    filergroup.add_argument('-f', '--filer', help="Specify filer hostname or ip on which to make or delete user. Overrides allfilers parameter.")
+    filergroup.add_argument('-af', '--allfilers', help="Do action on all filers in hosts", action="store_true")
+    usergroup.add_argument('-u', '--user', help="Specify which user to add or delete. Overrides allusers parameter.")
+    usergroup.add_argument('-au', '--allusers', help="Do action for all users", action="store_true")
+    parser.add_argument('-rp', '--rootpass', help="Specify root password for filer")
+    parser.add_argument('-cfg', '--config', help="Path to config dir", default="/opt/system/netapp_user_management")
+    parser.add_argument('-d', '--delete', help="Delete user/s", action="store_true")
+
+    args =  parser.parse_args()
+
+    sys.path.append(args.config)
+    try:
+        import config
+    except ImportError:
+        print "Config module config.py not found in %s" % sys.path
+        sys.exit(1)
+
+    if not args.filer and not args.allfilers:
+        print "Error: No filer defined. Use -f or -af option"
+        sys.exit(1)
+
+    if not args.user and not args.allusers:
+        print "Error: No user defined. Use -u or -au option"
+        sys.exit(1)
+
+    if args.rootpass:
+        rootpass = args.rootpass
+    else:
+        rootpass = config.root_passwords
+
+    if args.allfilers:
+        filers_list = get_filers_from_hosts(config.hosts_filter, config.hosts_file)
+
+    if args.filer:
+        filers_list = [args.filer]
+
+    for filer in filers_list:
+        try:
+            filer_users = FilerUsers.FilerUsers(filer, password=rootpass)
+        except BaseFilerApi.AuthorizationFailed:
+            continue
+        filer_keys = Keys.Keys(config.keypath, filer, rootpass)
+
+        if args.user:
+            if not filer_keys.is_key_avail(args.user):
+                print "Public key not found for user %s in %s." % (args.user, config.keypath)
+                sys.exit(1)
+            users = args.user
+        elif args.allusers:
+            users = filer_keys.get_users()
+
+        if args.delete:
+            print "%s: Deleting user/s %s ..." % (filer, str(users))
+            try:
+                filer_users.delete_user(users)
+            except BaseFilerApi.ApiNotEnabledException:
+                print "Api not enabled on %s. Check options httpd.admin.access and httpd.admin.enable." % filer
+                continue
+            except BaseFilerApi.deleteUserNotFoundException:
+                pass
+
+            try:
+                filer_keys.delete_key(users)
+            except BaseFilerApi.ApiNotEnabledException:
+                print "Api not enabled on %s. Check options httpd.admin.access and httpd.admin.enable." % filer
+                continue
+
+        else:
+            print "%s: Creating user/s %s ..." % (filer, str(users))
+            try:
+                filer_users.create_user(users)
+            except BaseFilerApi.ApiNotEnabledException:
+                print "Api not enabled on %s. Check options httpd.admin.access and httpd.admin.enable." % filer
+                continue
+
+            print "%s: Public key distribution ..." % filer
+            try:
+                filer_keys.deploy_key(users)
+            except Keys.DeployKeyException as e:
+                print "Key distribution error %s" % e.message
+            except BaseFilerApi.createDirException as e:
+                print e.args
+            except Exception as e:
+                print "Exception: %s" % e.args
+            else:
+                print "Done"
+
+if __name__ == '__main__':
+    main()

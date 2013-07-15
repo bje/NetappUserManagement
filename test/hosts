@@ -1,8 +1,8 @@
 127.0.0.1       localhost
-10.229.144.23   Q4DE8NSY057E001.bmbg.t-systems.com      Q4DE8NSY057E001 Q4DE8NSY057
+10.229.144.23   adminserver1
 
 #dfm servers
-10.228.163.6    mgmtffm01       dfm
+10.229.163.6    mgmtffm01       dfm
 
 # admin servers
 10.229.144.25   tc_adm
@@ -13,9 +13,9 @@
 ### T-COM ###
 
 ## Frankfurt Lurgialle
-10.229.1.146    C4DEE1SYN46     fsyn46                  #fn ocfl   ffm     lurgialle
-10.229.1.140    C4DEE1SYN31     fsyn31                  #fn ocfl   ffm     lurgialle
+10.229.1.146    C4DEE1SYN46     fsyn46                  #fn ocfl   ffm
+10.229.1.140    C4DEE1SYN31     fsyn31                  #fn ocfl   ffm
 
 ## Frankfurt Equinix
-10.228.167.43   C4DEE1SYN43     fsyn43                  #fc ocfl   deka
+10.228.167.43   C4DEE1SYN43     fsyn43                  #fc deka
 

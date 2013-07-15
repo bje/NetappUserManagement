@@ -3,14 +3,15 @@ __author__ = 'kmadac'
 import UserManagement.Keys as Keys
 import unittest
 import UserManagement.BaseFilerApi
+import os
 
 class Test_Keys(unittest.TestCase):
     def setUp(self):
-        self.netappkeys = Keys.Keys('C:/Documents and Settings/kmadac/PycharmProjects/NetappUserManagement/test/keys', '10.228.167.98', 'nasrise1')
+        self.netappkeys = Keys.Keys('./keys', '10.228.167.98', os.environ['FILERPASS'])
 
     def test_dir_create(self):
-        r = self.netappkeys.create_dir(path = '/vol/ROOT/etc/sshd/kmadac')
-        self.assertEqual(r, True)
+        r = self.netappkeys.create_dir(path='/vol/ROOT/etc/sshd/kmadac')
+        self.assertEqual(r, '/vol/ROOT/etc/sshd/kmadac')
 
     def test_dir_struct_create(self):
         r = self.netappkeys._create_dir_structure('kmadac')

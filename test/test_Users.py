@@ -3,11 +3,11 @@ __author__ = 'kmadac'
 import unittest
 import UserManagement.FilerUsers as Users
 import UserManagement.BaseFilerApi
-
+import os
 
 class Test_UserManagement(unittest.TestCase):
     def setUp(self):
-        self.netappapi = Users.FilerUsers('10.228.167.98', 'nasrise1')
+        self.netappapi = Users.FilerUsers('10.228.167.98', os.environ['FILERPASS'])
 
     def test_create_delete_user(self):
         r = False

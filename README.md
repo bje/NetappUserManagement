@@ -60,4 +60,3 @@ and adjust values for your environment.
 ##### Remove user **kmadac** from the environment (at the moment it is part for **adduser_filer** script, but it'll be changed in near future)
 
     adduser_filer -d -u kmadac -af
-

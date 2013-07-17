@@ -40,12 +40,13 @@ and adjust values for your environment.
 
 ### Configuration file variables
 
-`keypath` - path to directory with the user public keys
-`hosts_file` - path to hosts file
-`hosts_filter` - list of strings which identifies line in hosts file which will be used for user management operations (most likely will start with #)
-Example of such hosts file can be found in test directory.
-`root_passwords` - list of root passwords which will be used by scripts to login to filer. Script will try one after another in case that logging in won't be successful. It was added because we have several different root passwords in environment.
+* `keypath` - path to directory with the user public keys
 
+* `hosts_file` - path to hosts file
+
+* `hosts_filter` - list of strings which identifies line in hosts file which will be used for user management operations (most likely will start with #). Example of such hosts file can be found in test directory.
+
+* `root_passwords` - list of root passwords which will be used by scripts to login to filer. Script will try one after another in case that logging in won't be successful. It was added because we have several different root passwords in environment.
 ### Usage examples
 
 ##### Add user **kmadac** to whole environment

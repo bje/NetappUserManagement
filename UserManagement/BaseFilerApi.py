@@ -90,7 +90,7 @@ class BaseFilerApi(object):
         """
         Create directory specified by path. Assumes that only last dir in path needs to be created and preceeding
          dirs in path already exists.
-        If directory exists or was created, it will return Path
+        If directory exists or was created, it will return path
         In case of any error it will raise createDirException
         """
         api = NaElement("file-create-directory")
@@ -152,9 +152,7 @@ class BaseFilerApi(object):
 
     def create_user(self, login_name, password, full_name=''):
         """
-        Create user by API (same as useradmin user add)
-        try_again implemented because of bug. Sometimes API returns (u'13006', 'Missing input: useradmin-user'),
-        but if same procedure is called again immediately it works. So this procedure will try it 3 times.
+        Create user by API (same as useradmin user add in CLI)
         """
 
         api = NaElement("useradmin-user-add")

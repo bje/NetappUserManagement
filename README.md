@@ -34,7 +34,9 @@ Copy config file
     /opt/system/netapp_user_management/config_template.py
 to
 
-    /opt/system/netapp_user_management/config.py and adjust values for your environment.
+    /opt/system/netapp_user_management/config.py
+
+and adjust values for your environment.
 
 ### Configuration file variables
 

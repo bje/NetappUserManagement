@@ -1,4 +1,4 @@
-# Distribution of users and public keys to Netapp storage boxes
+## Distribution of users/keys to Netapp filers
 
 ## Overview
 
@@ -30,8 +30,10 @@ List of filers is taken from `/etc/hosts` file or other file with appropriate sy
     sudo pip install git+git://github.com/kmadac/NetappUserManagement.git
 
 Copy config file
+
     /opt/system/netapp_user_management/config_template.py
 to
+
     /opt/system/netapp_user_management/config.py and adjust values for your environment.
 
 ### Configuration file variables
@@ -44,11 +46,15 @@ Example of such hosts file can be found in test directory.
 
 ### Usage examples
 
-1. Add user **kmadac** to whole environment
+##### Add user **kmadac** to whole environment
+
     adduser_filer -u kmadac -af
 
-2. Add all users to filer **NEW_FILER** (this filer have to be defined in `hosts` file)
+##### Add all users to filer **NEW_FILER** (this filer have to be defined in `hosts` file)
+
     adduser_filer -au -f NEW_FILER
 
-3. Remove user **kmadac** from the environment (at the moment it is part for **adduser_filer** script, but it'll be changed in near future)
+##### Remove user **kmadac** from the environment (at the moment it is part for **adduser_filer** script, but it'll be changed in near future)
+
     adduser_filer -d -u kmadac -af
+

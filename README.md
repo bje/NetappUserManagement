@@ -3,7 +3,7 @@
 ## Overview
 
 Modules and scripts to manage multiple users and their public keys in environment with tens or even hundreds of Netapp filers.
-It subtitues centralized user management solutions like LDAP.  
+It substitues centralized user management solutions like LDAP.  
 It was not possible to use LDAP, because we need password-less logging in and LDAP doesnt support it on Netapps.
 Therefore, I created scripts which can add/delete user/s on single or all filers in the environment.
 

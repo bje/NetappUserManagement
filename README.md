@@ -11,8 +11,10 @@ Therefore, I created scripts which can add/delete user/s on single or all filers
 
 This modules and scripts are useful in following cases:
 
-1. Adding one or all users/keys to one filer or all filers in environment
-2. Adding one or all users/keys from one filer or all filers in environment
+1. Add one user to one filer
+2. Add all users to one filer
+3. Add one user to all filers
+4. Add all users to all filers
 
 All keys are stored in directory which is set in config file in variable `keypath`. Structure has to be following:
 

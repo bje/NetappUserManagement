@@ -1,6 +1,5 @@
 from NetappSDK.NaServer import NaServer
 from NetappSDK.NaElement import NaElement
-import time
 
 __author__ = 'kmadac'
 
@@ -30,7 +29,7 @@ class BaseFilerApi(object):
         self.api_major = 1
         self.api_minor = 4
 
-        self.naserver = NaServer(self.filer ,self.api_major, self.api_minor)
+        self.naserver = NaServer(self.filer, self.api_major, self.api_minor)
         self.naserver.set_server_type("FILER")
         self.naserver.set_transport_type("HTTP")
         self.naserver.set_port(80)
